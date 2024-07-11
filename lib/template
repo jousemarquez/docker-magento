@@ -8,7 +8,12 @@ fi
 git init -qqq
 git remote add origin https://github.com/jousemarquez/docker-magento
 git fetch origin -qqq
-git checkout release/next -- compose
+git checkout release/next -- compose || { echo "Failed to checkout release/next"; exit 1; }
+
+if [ ! -d "compose" ]; then
+  echo "Error: Directory 'compose' does not exist."
+  exit 1
+fi
 
 mv compose/* ./
 mv compose/.gitignore ./
